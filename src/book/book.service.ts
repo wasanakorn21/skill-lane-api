@@ -82,6 +82,28 @@ export class BookService {
       }
     }
 
+    if (updateBookDto.totalQuantity !== undefined) {
+      const currentBook = await this.prisma.book.findUnique({
+        where: { id },
+      });
+
+      if (!currentBook) {
+        throw new Error('Book not found');
+      }
+
+      const borrowedQuantity =
+        currentBook.totalQuantity - currentBook.availableQuantity;
+
+      if (updateBookDto.totalQuantity < borrowedQuantity) {
+        throw new Error(
+          `Cannot update totalQuantity. ${borrowedQuantity} books are currently borrowed`,
+        );
+      }
+
+      updateBookDto.availableQuantity =
+        updateBookDto.totalQuantity - borrowedQuantity;
+    }
+
     return await this.prisma.book.update({
       where: { id },
       data: updateBookDto,
