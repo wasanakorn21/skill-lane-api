@@ -27,6 +27,7 @@ export class BookService {
         const bookBorrowRecords = await this.prisma.borrowRecord.findFirst({
           where: { bookId: book.id, userId, returnedAt: null },
         });
+        book.coverImage = `${process.env.BASE_URL}/${process.env.UPLOAD_DIR}/${book.coverImage}`;
 
         return {
           ...book,

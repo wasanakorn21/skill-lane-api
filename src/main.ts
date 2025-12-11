@@ -10,9 +10,12 @@ async function bootstrap() {
     origin: true,
     credentials: true,
   });
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+
+  const uploadPath = join(process.cwd(), process.env.UPLOAD_DIR || 'uploads');
+  app.useStaticAssets(uploadPath, {
     prefix: '/uploads/',
   });
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
