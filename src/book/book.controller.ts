@@ -16,6 +16,7 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { existsSync, mkdirSync } from 'fs';
 import { CreateBookDto } from './dto/create-book.dto';
+import { UpdateBookDto } from './dto/update-book.dto';
 import { BookService } from './book.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { BorrowBookDto } from './dto/borrow-book.dto';
@@ -84,7 +85,7 @@ export class BookController {
   @UseGuards(JwtAuthGuard)
   async update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateBookDto: CreateBookDto,
+    @Body() updateBookDto: UpdateBookDto,
   ) {
     return await this.bookService.update(id, updateBookDto);
   }
