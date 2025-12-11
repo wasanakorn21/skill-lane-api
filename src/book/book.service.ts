@@ -8,6 +8,14 @@ import { BorrowBookDto } from './dto/borrow-book.dto';
 export class BookService {
   constructor(private readonly prisma: PrismaService) {}
   async create(createBookDto: CreateBookDto) {
+    const existingBook = await this.prisma.book.findUnique({
+      where: { isbn: createBookDto.isbn },
+    });
+
+    if (existingBook) {
+      throw new Error('ISBN already exists');
+    }
+
     createBookDto.availableQuantity = createBookDto.totalQuantity;
     return await this.prisma.book.create({ data: createBookDto });
   }
@@ -64,6 +72,16 @@ export class BookService {
   }
 
   async update(id: number, updateBookDto: UpdateBookDto) {
+    if (updateBookDto.isbn) {
+      const existingBook = await this.prisma.book.findUnique({
+        where: { isbn: updateBookDto.isbn },
+      });
+
+      if (existingBook && existingBook.id !== id) {
+        throw new Error('ISBN already exists');
+      }
+    }
+
     return await this.prisma.book.update({
       where: { id },
       data: updateBookDto,
