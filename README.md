@@ -1,98 +1,270 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Skill Lane API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API สำหรับระบบจัดการยืม-คืนหนังสือ พัฒนาด้วย NestJS, Prisma และ MySQL
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📋 คุณสมบัติ
 
-## Description
+- 🔐 **Authentication & Authorization**
+  - User registration with password hashing (bcrypt)
+  - JWT-based authentication
+  - Protected routes with JWT Guard
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- 📚 **Book Management**
+  - Create, Read, Update books
+  - Upload book cover images
+  - Search books by title, author, or ISBN
+  - ISBN uniqueness validation
+  - Inventory tracking (total quantity & available quantity)
 
-## Project setup
+- 📖 **Borrow & Return System**
+  - Borrow books with quantity tracking
+  - Return books
+  - Check borrow status for each user
+  - Prevent quantity updates below borrowed amount
 
-```bash
-$ npm install
-```
+## 🛠️ Tech Stack
 
-## Compile and run the project
+- **Framework**: NestJS 11
+- **Database**: MySQL with Prisma ORM
+- **Authentication**: JWT (JSON Web Tokens)
+- **Password Hashing**: bcrypt
+- **File Upload**: Multer
+- **Validation**: class-validator, class-transformer
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
+## 📦 Installation
 
 ```bash
-# unit tests
-$ npm run test
+# Clone repository
+git clone <repository-url>
+cd skill-lane-api
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Install dependencies
+npm install
 ```
 
-## Deployment
+## ⚙️ Environment Variables
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+สร้างไฟล์ `.env` จากไฟล์ `.env.example`:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+cp .env.example .env
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## � Docker Setup
 
-## Resources
+เริ่มต้น MySQL database ด้วย Docker Compose:
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+# Start database
+docker-compose up -d
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Stop database
+docker-compose down
 
-## Support
+# Stop and remove volumes
+docker-compose down -v
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## �🗄️ Database Setup
 
-## Stay in touch
+```bash
+# Run Prisma migrations
+npx prisma migrate dev --name init
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+# (Optional) Open Prisma Studio to view data
+npx prisma studio
+```
 
-## License
+## 🚀 Running the Application
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+# Development mode
+npm run start:dev
+
+# Production mode
+npm run build
+npm run start:prod
+```
+
+API จะรันที่ `http://localhost:3000`
+
+## 📡 API Endpoints
+
+### Authentication
+
+#### Register
+
+```http
+POST /register
+Content-Type: application/json
+
+{
+  "username": "user123",
+  "password": "password123"
+}
+```
+
+#### Login
+
+```http
+POST /auth
+Content-Type: application/json
+
+{
+  "username": "user123",
+  "password": "password123"
+}
+
+Response:
+{
+  "accessToken": "jwt-token",
+  "user": {
+    "id": 1,
+    "username": "user123"
+  }
+}
+```
+
+### Books (Protected - requires JWT token)
+
+#### Create Book
+
+```http
+POST /book
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "Book Title",
+  "author": "Author Name",
+  "isbn": "1234567890",
+  "published": "2024",
+  "coverImage": "filename.jpg",
+  "totalQuantity": 10
+}
+```
+
+#### Upload Cover Image
+
+```http
+POST /book/upload
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+
+file: <image-file>
+
+Response:
+{
+  "url": "/uploads/filename.jpg",
+  "filename": "filename.jpg"
+}
+```
+
+#### Get All Books (with search)
+
+```http
+GET /book?search=keyword
+Authorization: Bearer <token>
+
+Response: Array of books with borrow status
+```
+
+#### Get Book by ID
+
+```http
+GET /book/:id
+Authorization: Bearer <token>
+```
+
+#### Update Book
+
+```http
+PATCH /book/:id
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "title": "Updated Title",
+  "totalQuantity": 15
+}
+```
+
+#### Borrow Book
+
+```http
+POST /book/borrow
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "bookId": 1,
+  "quantity": 2
+}
+```
+
+#### Return Book
+
+```http
+POST /book/:borrowRecordId/return
+Authorization: Bearer <token>
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── auth/           # Authentication module
+│   ├── guards/     # JWT guards & strategy
+│   ├── decorators/ # Custom decorators
+│   └── dto/        # Login DTOs
+├── register/       # User registration module
+├── book/           # Book management module
+│   └── dto/        # Book DTOs
+├── prisma/         # Prisma service
+└── main.ts         # Application entry point
+
+prisma/
+├── schema.prisma   # Database schema
+└── migrations/     # Database migrations
+
+uploads/            # Uploaded images
+```
+
+## 🔒 Security Features
+
+- Password hashing with bcrypt (salt rounds: 10)
+- JWT token-based authentication
+- Protected routes with guards
+- Input validation with class-validator
+- CORS enabled
+- File upload restrictions (images only)
+
+## 📝 Database Schema
+
+**User**
+
+- id, username, password, createdAt
+
+**Book**
+
+- id, title, author, isbn (unique), published, coverImage, totalQuantity, availableQuantity, createdAt, updatedAt
+
+**BorrowRecord**
+
+- id, userId, bookId, quantity, borrowedAt, returnedAt
+
+## 🤝 Contributing
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👤 Author
+
+Built with ❤️ using NestJS
