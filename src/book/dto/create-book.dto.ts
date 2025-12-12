@@ -23,11 +23,11 @@ export class CreateBookDto {
 
   @IsInt()
   @IsNotEmpty()
-  @Min(0)
+  @Min(1)
   totalQuantity: number;
 
   @IsInt()
   @IsNotEmpty()
-  @Min(0)
+  @Min(1)
   availableQuantity: number = 0;
 }

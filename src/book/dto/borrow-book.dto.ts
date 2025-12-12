@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty } from 'class-validator';
+import { IsInt, IsNotEmpty, Min } from 'class-validator';
 
 export class BorrowBookDto {
   @IsInt()
@@ -11,5 +11,6 @@ export class BorrowBookDto {
 
   @IsInt()
   @IsNotEmpty()
+  @Min(1)
   quantity: number;
 }
